@@ -1,3 +1,4 @@
+import java.sql.Array;
 import java.util.ArrayList;
 
 /**
@@ -47,31 +48,65 @@ public class BST {
      * @return true if val is in the tree, false otherwise
      */
     public boolean search(int val) {
-        // TODO: Complete the search function
+        /*
+        if (setupTestData) {
+            return false;
+        }
+        if (val == search(val)) {
+
+        }
+        */
         return false;
     }
 
     /**
      * @return ArrayList of BSTNodes in inorder
      */
-    public ArrayList<BSTNode> getInorder() {
-        // TODO: Complete inorder traversal
-        return null;
+    public ArrayList<BSTNode> getInOrder() {
+        ArrayList<BSTNode> arrInOrder = new ArrayList<BSTNode>();
+        inOrder(root, arrInOrder);
+        // create new arraylist
+        // pass it into recursive method
+        // return arraylist
+    }
+
+    public void inOrder(BSTNode n, ArrayList<BSTNode> nodes) {
+        if (n.getLeft() == null && n.getRight() == null) {
+            return;
+        }
+        //System.out.println(n.getVal());
+        inOrder(n.getLeft(), getInOrder());
+        nodes.add(n);
+        inOrder(n.getRight(), getInOrder());
+
     }
 
     /**
      * @return ArrayList of BSTNodes in preorder
      */
     public ArrayList<BSTNode> getPreorder() {
-        // TODO: Complete preorder traversal
-        return null;
+        ArrayList<BSTNode> arrPreOrder = new ArrayList<BSTNode>();
+        inOrder(root, arrPreOrder);
+    }
+
+    public void preOrder(BSTNode n, ArrayList<BSTNode> nodes) {
+        if (n.getLeft() == null && n.getRight() == null) {
+            return;
+        }
+        System.out.println(n.getVal());
+        inOrder(n.getLeft(), getInOrder());
+        nodes.add(n);
+        inOrder(n.getRight(), getInOrder());
     }
 
     /**
      * @return ArrayList of BSTNodes in postorder
      */
     public ArrayList<BSTNode> getPostorder() {
-        // TODO: Complete postorder traversal
+        //base case
+        getInorder(root.getLeft());
+        getInorder(root.getRight());
+        System.out.println(root.getVal());
         return null;
     }
 
