@@ -65,6 +65,7 @@ public class BST {
     public ArrayList<BSTNode> getInOrder() {
         ArrayList<BSTNode> arrInOrder = new ArrayList<BSTNode>();
         inOrder(root, arrInOrder);
+        return arrInOrder;
         // create new arraylist
         // pass it into recursive method
         // return arraylist
@@ -87,6 +88,7 @@ public class BST {
     public ArrayList<BSTNode> getPreorder() {
         ArrayList<BSTNode> arrPreOrder = new ArrayList<BSTNode>();
         inOrder(root, arrPreOrder);
+        return arrPreOrder;
     }
 
     public void preOrder(BSTNode n, ArrayList<BSTNode> nodes) {
@@ -103,11 +105,20 @@ public class BST {
      * @return ArrayList of BSTNodes in postorder
      */
     public ArrayList<BSTNode> getPostorder() {
-        //base case
-        getInorder(root.getLeft());
-        getInorder(root.getRight());
-        System.out.println(root.getVal());
-        return null;
+        ArrayList<BSTNode> arrPostOrder = new ArrayList<BSTNode>();
+        inOrder(root, arrPostOrder);
+        return arrPostOrder;
+    }
+
+    public void postOrder(BSTNode n, ArrayList<BSTNode> nodes) {
+        if (n.getLeft() == null && n.getRight() == null) {
+            return;
+        }
+        inOrder(n.getLeft(), getInOrder());
+        nodes.add(n);
+        inOrder(n.getRight(), getInOrder());
+        System.out.println(n.getVal());
+
     }
 
     /**
