@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 /**
  * An Integer Binary Search Tree
- * @author: Your Name Here
- * @version: Date
+ * @author: Angelica Chou
+ * @version: 12/12/24
  */
 
 public class BST {
@@ -42,93 +42,96 @@ public class BST {
         System.out.println(nodes.get(nodes.size()-1));
     }
 
-    /**
-     * A function that searches for a value in the tree
-     * @param val integer value to search for
-     * @return true if val is in the tree, false otherwise
-     */
+    //search for given value in tree
     public boolean search(int val) {
-        /*
-        if (setupTestData) {
-            return false;
-        }
-        if (val == search(val)) {
-
-        }
-        */
-        return false;
+        return search(val, root);
     }
 
-    /**
-     * @return ArrayList of BSTNodes in inorder
-     */
+    //helper function
+    public boolean search(int val, BSTNode node) {
+        //if the value is in the tree, return true
+        if (node.getVal() == val) {
+            return true;
+        }
+        //if the children are empty, return false;
+        if (node.getLeft() == null && node.getRight() == null) {
+            return false;
+        }
+        return (search(val, node.getLeft()) || search(val, node.getRight()));
+    }
+
+    //function to add inOrder nodes into arrayList
     public ArrayList<BSTNode> getInOrder() {
+        //create new arrayList
         ArrayList<BSTNode> arrInOrder = new ArrayList<BSTNode>();
         inOrder(root, arrInOrder);
         return arrInOrder;
-        // create new arraylist
-        // pass it into recursive method
-        // return arraylist
     }
 
+    //helper function for inOrder recursion
     public void inOrder(BSTNode n, ArrayList<BSTNode> nodes) {
-        if (n.getLeft() == null && n.getRight() == null) {
+        if (n == null) {
             return;
         }
-        //System.out.println(n.getVal());
-        inOrder(n.getLeft(), getInOrder());
+        //inOrder: left, root, right
+        inOrder(n.getLeft(), nodes);
         nodes.add(n);
-        inOrder(n.getRight(), getInOrder());
-
+        inOrder(n.getRight(), nodes);
     }
 
-    /**
-     * @return ArrayList of BSTNodes in preorder
-     */
+    //function to add preOrder nodes into arrayList
     public ArrayList<BSTNode> getPreorder() {
         ArrayList<BSTNode> arrPreOrder = new ArrayList<BSTNode>();
-        inOrder(root, arrPreOrder);
+        preOrder(root, arrPreOrder);
         return arrPreOrder;
     }
 
+    //preOrder: root, left, right
     public void preOrder(BSTNode n, ArrayList<BSTNode> nodes) {
-        if (n.getLeft() == null && n.getRight() == null) {
+        if (n == null) {
             return;
         }
-        System.out.println(n.getVal());
-        inOrder(n.getLeft(), getInOrder());
         nodes.add(n);
-        inOrder(n.getRight(), getInOrder());
+        preOrder(n.getLeft(), nodes);
+        preOrder(n.getRight(), nodes);
     }
 
-    /**
-     * @return ArrayList of BSTNodes in postorder
-     */
+    //function to add posOrder nodes into arrayList
     public ArrayList<BSTNode> getPostorder() {
         ArrayList<BSTNode> arrPostOrder = new ArrayList<BSTNode>();
-        inOrder(root, arrPostOrder);
+        postOrder(root, arrPostOrder);
         return arrPostOrder;
     }
 
+    //postOrder: left, right, root
     public void postOrder(BSTNode n, ArrayList<BSTNode> nodes) {
-        if (n.getLeft() == null && n.getRight() == null) {
+        if (n == null) {
             return;
         }
-        inOrder(n.getLeft(), getInOrder());
+        postOrder(n.getLeft(), nodes);
+        postOrder(n.getRight(), nodes);
         nodes.add(n);
-        inOrder(n.getRight(), getInOrder());
-        System.out.println(n.getVal());
-
     }
 
-    /**
-     * Inserts the given integer value to the tree
-     * if it does not already exist. Modifies the
-     * root instance variable to be the root of the new modified tree.
-     * @param val The value ot insert
-     */
+    //inserts given value into the tree where it fits
     public void insert(int val) {
-        // TODO: Complete insert
+        root = insert(val, root);
+    }
+
+    public BSTNode insert(int val, BSTNode node) {
+        if (node == null) {
+            node = new BSTNode(val);
+            return node;
+        }
+        //if given value is less than a node, put it to the left of node
+        else if (node.getVal() < val) {
+            node.setLeft(insert(val, node.getLeft()));
+        }
+        //if given value is greater than node, put it to the right of the node
+        else if (node.getVal() > val) {
+            node.setRight(insert(val, node.getRight()));
+        }
+        return node;
     }
 
     /**
@@ -157,16 +160,16 @@ public class BST {
         printNodes(sol);
 
         System.out.println("\nInorder traversal of binary tree is");
-        sol = tree.getInorder();
+        sol = tree.getInOrder();
         printNodes(sol);
 
         System.out.println("\nPostorder traversal of binary tree is");
         sol = tree.getPostorder();
         printNodes(sol);
 
-        tree.insert(8);
+        tree.insert(7);
         System.out.println("\nInorder traversal of binary tree is");
-        sol = tree.getInorder();
+        sol = tree.getInOrder();
         printNodes(sol);
     }
 }
